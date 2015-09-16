@@ -31,7 +31,7 @@ class RegisterWidgetSettings {
 					')?>
 			<h2><?php _e('Login, Register Widget Settings','loginregisterwidget')?></h2>
 			<?php if (version_compare(PHP_VERSION, '5.3','<')){
-					printf( __( 'Google ReCaptcha require at least PHP 5.3 your version is %s update your php version and try again.', 'loginregisterwidget' ), PHP_VERSION );
+					printf( __( 'Google ReCaptcha requires at least PHP 5.3 your version is %s update your php version and try again.', 'loginregisterwidget' ), PHP_VERSION );
 				}
 			?>
 			<form method="post" action="options.php">
@@ -81,6 +81,13 @@ class RegisterWidgetSettings {
 			'register-widget-settings-admin', // page
 			'register_widget_settings_setting_section' // section
 		);
+		add_settings_field(
+			'disable_google_recaptcha_in_widget_3_dark', // id
+			__('Enable Google Recaptcha Dark Theme','loginregisterwidget'), // title
+			array( $this, 'disable_google_recaptcha_in_widget_3_callback_dark' ), // callback
+			'register-widget-settings-admin', // page
+			'register_widget_settings_setting_section' // section
+		);
 	}
 
 	public function register_widget_settings_sanitize($input) {
@@ -95,6 +102,10 @@ class RegisterWidgetSettings {
 
 		if ( isset( $input['disable_google_recaptcha_in_widget_3'] ) ) {
 			$sanitary_values['disable_google_recaptcha_in_widget_3'] = $input['disable_google_recaptcha_in_widget_3'];
+		}
+		
+		if ( isset( $input['disable_google_recaptcha_in_widget_3_dark'] ) ) {
+			$sanitary_values['disable_google_recaptcha_in_widget_3_dark'] = $input['disable_google_recaptcha_in_widget_3_dark'];
 		}
 
 		return $sanitary_values;
@@ -123,6 +134,14 @@ class RegisterWidgetSettings {
 			'<input type="checkbox" name="register_widget_settings_option_name[disable_google_recaptcha_in_widget_3]" id="disable_google_recaptcha_in_widget_3" value="disable_google_recaptcha_in_widget_3" %1$s> <label for="disable_google_recaptcha_in_widget_3">%2$s</label>',
 			( isset( $this->register_widget_settings_options['disable_google_recaptcha_in_widget_3'] ) && $this->register_widget_settings_options['disable_google_recaptcha_in_widget_3'] === 'disable_google_recaptcha_in_widget_3' ) ? 'checked' : '',
 			__('Enable ReCaptcha in widget and on default wp-login.php forms','loginregisterwidget')
+		);
+	}
+	
+	public function disable_google_recaptcha_in_widget_3_callback_dark() {
+		printf(
+			'<input type="checkbox" name="register_widget_settings_option_name[disable_google_recaptcha_in_widget_3_dark]" id="disable_google_recaptcha_in_widget_3_dark" value="disable_google_recaptcha_in_widget_3_dark" %1$s> <label for="disable_google_recaptcha_in_widget_3_dark">%2$s</label>',
+			( isset( $this->register_widget_settings_options['disable_google_recaptcha_in_widget_3_dark'] ) && $this->register_widget_settings_options['disable_google_recaptcha_in_widget_3_dark'] === 'disable_google_recaptcha_in_widget_3_dark' ) ? 'checked' : '',
+			__('Enable Google ReCaptcha Dark Theme','loginregisterwidget')
 		);
 	}
 
