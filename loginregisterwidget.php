@@ -21,35 +21,42 @@ include(plugin_dir_path(__FILE__).'admin/options.php');
 			
 			if(!empty($google_recaptcha_secret_key)){
 				function register_widget_recaptcha_register_errors( $errors, $sanitized_user_login, $user_email ) {
-					global $google_recaptcha_secret_key;
-					$recaptcha = new \ReCaptcha\ReCaptcha($google_recaptcha_secret_key);
-					$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-					
-					if (!$resp->isSuccess()) {
-						$errors->add( 'g-recaptcha-response', sprintf( wp_kses( __( '<strong>ERROR</strong>: Invalid ReCaptcha.', 'loginregisterwidget' ), array(  'strong' => array() ) )) );
-						return $errors;
+					if(isset($_POST['g-recaptcha-response'])){
+						global $google_recaptcha_secret_key;
+						$recaptcha = new \ReCaptcha\ReCaptcha($google_recaptcha_secret_key);
+						$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+						
+						if (!$resp->isSuccess()) {
+							$errors->add( 'g-recaptcha-response', sprintf( wp_kses( __( '<strong>ERROR</strong>: Invalid ReCaptcha.', 'loginregisterwidget' ), array(  'strong' => array() ) )) );
+							return $errors;
+						}
 					}
 					return $errors;
 				}
 				//LOST PASSWORD
 				function register_widget_recaptcha_lost_errors(){
-					global $google_recaptcha_secret_key;
-					$recaptcha = new \ReCaptcha\ReCaptcha($google_recaptcha_secret_key);
-					$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-					if (!$resp->isSuccess()) {
-						return new WP_Error( 'g-recaptcha-response', sprintf( wp_kses( __( '<strong>ERROR</strong>: Invalid ReCaptcha.', 'loginregisterwidget' ), array(  'strong' => array() ) )) );
-					}else return true;
+					if(isset($_POST['g-recaptcha-response'])){
+						global $google_recaptcha_secret_key;
+						$recaptcha = new \ReCaptcha\ReCaptcha($google_recaptcha_secret_key);
+						$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+						if (!$resp->isSuccess()) {
+							return new WP_Error( 'g-recaptcha-response', sprintf( wp_kses( __( '<strong>ERROR</strong>: Invalid ReCaptcha.', 'loginregisterwidget' ), array(  'strong' => array() ) )) );
+						}
+					}
+					return true;
 					
 				}
 				//login
 				function register_widget_recaptcha_login_errors( $user ){
-					global $google_recaptcha_secret_key;
-					$recaptcha = new \ReCaptcha\ReCaptcha($google_recaptcha_secret_key);
-					$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-					if (!$resp->isSuccess()) {
-						$user = new WP_Error( 'g-recaptcha-response', sprintf( wp_kses( __( '<strong>ERROR</strong>: Invalid ReCaptcha.', 'loginregisterwidget' ), array(  'strong' => array() ) )) );
-						return $user;
-					};
+					if(isset($_POST['g-recaptcha-response'])){
+						global $google_recaptcha_secret_key;
+						$recaptcha = new \ReCaptcha\ReCaptcha($google_recaptcha_secret_key);
+						$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+						if (!$resp->isSuccess()) {
+							$user = new WP_Error( 'g-recaptcha-response', sprintf( wp_kses( __( '<strong>ERROR</strong>: Invalid ReCaptcha.', 'loginregisterwidget' ), array(  'strong' => array() ) )) );
+							return $user;
+						}
+					}
 					return $user;
 				}
 			}

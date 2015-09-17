@@ -3,15 +3,30 @@
 var CaptchaCallbackRegister = function(){
 	setTimeout(function () {
 		if(jQuery('#g-recaptcha-login').length){
-		   widgetlogin 		=  grecaptcha.render('g-recaptcha-login', {'sitekey' : jQuery('#g-recaptcha-login').attr('data-sitekey')});
+			if(jQuery('#g-recaptcha-login').attr('data-theme') == 'dark'){
+				var theme = 'dark';
+			}else{
+				var theme = 'light';
+			}
+		   widgetlogin 		=  grecaptcha.render('g-recaptcha-login', {'sitekey' : jQuery('#g-recaptcha-login').attr('data-sitekey'),'theme':theme});
 	   }
 	}, 1000);
 	setTimeout(function () {
 	   if(jQuery('#g-recaptcha-lost').length){
-		   widgetlost 		=  grecaptcha.render('g-recaptcha-lost', {'sitekey' : jQuery('#g-recaptcha-lost').attr('data-sitekey')});
+		   if(jQuery('#g-recaptcha-lost').attr('data-theme') == 'dark'){
+				var theme = 'dark';
+			}else{
+				var theme = 'light';
+			}
+		   widgetlost 		=  grecaptcha.render('g-recaptcha-lost', {'sitekey' : jQuery('#g-recaptcha-lost').attr('data-sitekey'),'theme':theme});
 	   }
 	   if(jQuery('#g-recaptcha-register').length){
-        widgetregister 	=  grecaptcha.render('g-recaptcha-register', {'sitekey' : jQuery('#g-recaptcha-register').attr('data-sitekey')});
+		   if(jQuery('#g-recaptcha-register').attr('data-theme') == 'dark'){
+				var theme = 'dark';
+			}else{
+				var theme = 'light';
+			}
+        widgetregister 	=  grecaptcha.render('g-recaptcha-register', {'sitekey' : jQuery('#g-recaptcha-register').attr('data-sitekey'),'theme':theme});
 		}
     }, 2500);
 };

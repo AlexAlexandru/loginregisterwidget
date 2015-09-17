@@ -38,6 +38,7 @@ Widget for login, register and lost password.
 3. Login
 4. Register
 5. Lost password
+6. Dark Theme
 
 == Upgrade Notice ==
 

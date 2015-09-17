@@ -31,7 +31,12 @@ class loginregisterwidget extends WP_Widget {
 		$show_lost = isset( $instance['show_lost'] ) ? $instance['show_lost'] : false;
 		
 		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Account','loginregisterwidget');
-
+		$custom_image_path = trailingslashit(get_stylesheet_directory()).'ajax-loader.gif';
+		if(file_exists($custom_image_path)){
+			$image_url = trailingslashit(get_stylesheet_directory_uri()).'ajax-loader.gif';
+		}else {
+			$image_url = plugin_dir_url(__FILE__).'ajax-loader.gif';
+		}
 		if(!is_user_logged_in()){
 ?>
 		<?php echo $args['before_widget']; ?>
@@ -42,11 +47,11 @@ class loginregisterwidget extends WP_Widget {
 		<?php if ($show_login || $show_lost){?>
 			<ul>
 				<?php if($show_login){ ?>
-				<li class="register-widget-inline"><a href="#register-widget-login"><?php _e('Log in','loginregisterwidget'); ?></a></li>
+				<li class="register-widget-inline register-widget-login"><a class="register-widget-tab" href="#register-widget-login"><?php _e('Log in','loginregisterwidget'); ?></a></li>
 				<?php }?>
-				<li class="register-widget-inline"><a href="#register-widget-register"><?php _e('Register','loginregisterwidget'); ?></a></li>
+				<li class="register-widget-inline register-widget-register"><a class="register-widget-tab" href="#register-widget-register"><?php _e('Register','loginregisterwidget'); ?></a></li>
 				<?php if($show_lost){ ?>
-				<li class="register-widget-inline register-widget-lostpassw"><a href="#register-widget-lost"><?php _e('Lost password','loginregisterwidget'); ?></a></li>
+				<li class="register-widget-inline register-widget-lostpassw"><a class="register-widget-tab" href="#register-widget-lost"><?php _e('Lost password','loginregisterwidget'); ?></a></li>
 				<?php }?>
 			</ul>
 		<?php }?>
@@ -61,6 +66,7 @@ class loginregisterwidget extends WP_Widget {
 					<label for="user_pass"><?php _e('Password','loginregisterwidget'); ?></label>
 						<input type="password" required name="pwd" id="user_pass" class="input" value="" size="20">
 					<p class="login-remember">
+					<br>
 						<label>
 							<input name="rememberme" type="checkbox" id="rememberme" value="forever"> <?php _e('Remember Me','loginregisterwidget'); ?>
 						</label>
@@ -68,7 +74,7 @@ class loginregisterwidget extends WP_Widget {
 					<?php do_action('loginregisterwidget_login_form'); ?>
 					<div id="error-login-widget"></div>
 					<p>
-						<img id="ajaxicon-login-widget" src="<?php echo esc_url(plugin_dir_url(__FILE__).'ajax-loader.gif')?>" alt="Loading"></img>
+						<img id="ajaxicon-login-widget" src="<?php echo esc_url($image_url)?>" alt="Loading icon"></img>
 					</p>
 					<p class="login-submit">
 						<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In">
@@ -84,6 +90,7 @@ class loginregisterwidget extends WP_Widget {
 					<label for="user_login"><?php _e('Username','loginregisterwidget'); ?><br>
 						<input type="text" name="user_login" id="user_login" required class="input" size="20">
 					</label>
+					<br>
 					<label for="user_email"><?php _e('E-mail','loginregisterwidget'); ?><br>
 						<input type="email" name="user_email" id="user_email" required class="input" size="25">
 					</label>
@@ -94,7 +101,7 @@ class loginregisterwidget extends WP_Widget {
 						<span><?php _e('Registration complete. Please check your e-mail.','loginregisterwidget'); ?></span>
 					</div>
 					<p>
-						<img id="ajaxicon-register-widget" src="<?php echo esc_url(plugin_dir_url(__FILE__).'ajax-loader.gif')?>" alt="Loading"></img>
+						<img id="ajaxicon-register-widget" src="<?php echo esc_url($image_url)?>" alt="Loading icon"></img>
 					</p>
 					<p class="register-submit">
 						<input type="submit" name="wp-submit" id="wp-submit" value="Register">
@@ -120,7 +127,7 @@ class loginregisterwidget extends WP_Widget {
 						<span><?php _e('Check your e-mail for the confirmation link.','loginregisterwidget'); ?></span>
 					</div>
 					<p>
-						<img id="ajaxicon-lost-widget" src="<?php echo esc_url(plugin_dir_url(__FILE__).'ajax-loader.gif')?>" alt="Loading"></img>
+						<img id="ajaxicon-lost-widget" src="<?php echo esc_url($image_url)?>" alt="Loading icon"></img>
 					</p>
 					<p class="lost-password-submit">
 						<input type="submit" name="wp-submit" id="wp-submit" value="Get New Password">

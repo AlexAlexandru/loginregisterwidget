@@ -34,6 +34,7 @@ class RegisterWidgetSettings {
 					printf( __( 'Google ReCaptcha requires at least PHP 5.3 your version is %s update your php version and try again.', 'loginregisterwidget' ), PHP_VERSION );
 				}
 			?>
+			<?php _e('If you want to change the loading icon upload your icon in your current active theme folder with the exact name ajax-loader.gif If you are using a child theme upload in the child theme directory with the name ajax-loader.gif','loginregisterwidget')?>
 			<form method="post" action="options.php">
 				<?php
 					settings_fields( 'register_widget_settings_option_group' );
